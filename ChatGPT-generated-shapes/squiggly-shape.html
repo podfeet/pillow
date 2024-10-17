@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squiggly Oblong Shape</title>
+</head>
+<body>
+
+<canvas id="myCanvas" width="300" height="150" style="border:1px solid #000000;"></canvas>
+
+<script>
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function drawSquigglyOblongShape() {
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        // Clear the canvas before drawing
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Parameters for the oblong shape
+        var centerX = canvas.width / 2;
+        var centerY = canvas.height / 2;
+        var radiusX = 80; // Horizontal radius of the oblong shape
+        var radiusY = 50; // Vertical radius of the oblong shape
+        var squiggleFactor = 15; // How much the shape "squiggles" around the base ellipse
+        var segments = 12; // Number of segments (curves) in the shape
+
+        // Start the path
+        ctx.beginPath();
+
+        // Move to the starting point (along the perimeter of the ellipse)
+        var angleStep = (2 * Math.PI) / segments;
+        var startAngle = 0;
+
+        // Loop to create each curve around the oblong shape
+        for (let i = 0; i <= segments; i++) {
+            var angle = startAngle + i * angleStep;
+
+            // Generate the base points along the oblong path
+            var baseX = centerX + radiusX * Math.cos(angle);
+            var baseY = centerY + radiusY * Math.sin(angle);
+
+            // Add some randomness to the control points for a squiggly effect
+            var cp1X = baseX + getRandomInt(-squiggleFactor, squiggleFactor);
+            var cp1Y = baseY + getRandomInt(-squiggleFactor, squiggleFactor);
+            var cp2X = baseX + getRandomInt(-squiggleFactor, squiggleFactor);
+            var cp2Y = baseY + getRandomInt(-squiggleFactor, squiggleFactor);
+
+            // Draw curve from previous point to this one, with squiggly control points
+            if (i === 0) {
+                // Move to the first point
+                ctx.moveTo(cp1X, cp1Y);
+            } else {
+                // Draw a Bezier curve to the next point
+                ctx.bezierCurveTo(cp1X, cp1Y, cp2X, cp2Y, baseX, baseY);
+            }
+        }
+
+        // Close the path to form an enclosed shape
+        ctx.closePath();
+
+        // Set stroke and fill styles
+        ctx.strokeStyle = 'purple';
+        ctx.lineWidth = 2;
+        ctx.fillStyle = 'lightblue';
+
+        // Fill the shape and draw the outline
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    // Draw the squiggly oblong shape when the page loads
+    drawSquigglyOblongShape();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw Rectangle</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rectangle Drawing Example</h1>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+
+    <script>
+        // Get the canvas element
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+
+        // Define the rectangle properties
+        var x = 50;  // X coordinate of top-left corner
+        var y = 50;  // Y coordinate of top-left corner
+        var s = 20
+        var PW = 18*s;
+        var PH = 12*s;
+
+        // Draw the rectangle
+        context.fillStyle = 'blue'; // Set fill color
+        context.fillRect(x, y, PW, PH);
+    </script>
+</body>
+</html>
